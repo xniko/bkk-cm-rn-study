@@ -7,15 +7,13 @@ import { ActionCreators } from '../actions';
 import {
   View,
   Button,
-  Text
+  Text,
+  StyleSheet
 } from 'react-native';
 import ShowText from '../components/showText/showText';
+import {Actions} from 'react-native-router-flux'
 
 class Home extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   changeText(text: string) {
     // Call action setText
@@ -25,17 +23,43 @@ class Home extends Component {
   render() {
 
     return (
-      <View>
-        <Text>Hello!</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Hello!</Text>
+
         <ShowText text={this.props.text}></ShowText>
-        <Button onPress={() => this.changeText('Brand new text!')} title="Click me and see magic"></Button>
+
+        <View style={styles.buttonContainer}>
+          <Button onPress={() => this.changeText('Brand new text!')} title="Click to change text in view"></Button>
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <Button onPress={Actions.about} title="Go to about page"></Button>
+        </View>
       </View>
     )
   }
 
 }
 
-// Map wanted store properties to component as props
+// Define view styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 15
+  },
+  buttonContainer: {
+    marginBottom: 15
+  }
+});
+
+// Map wanted store properties to component as props.
+// This function makes it possible that we get state data to component. state.text is
+// now available in component with this.props.text.
 function mapStateToProps(state) {
   return {
     text: state.text

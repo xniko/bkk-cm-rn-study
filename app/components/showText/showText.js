@@ -10,6 +10,10 @@ type Props = {
   text: string
 }
 
+/**
+ * This is really dummy component. It takes text as a prop and shows it.
+ * Component is here to demonstrate how to create new components.
+ */
 class ShowText extends Component {
 
   props: Props

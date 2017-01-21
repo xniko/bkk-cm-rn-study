@@ -1,12 +1,19 @@
 /* @flow */
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import reducer from '../reducers';
-import {Router, routerReducer, Route, Container, Animations, Schema} from 'react-native-redux-router';
+
+// Import Router and Scene from react-native-router-flux...
+import { Router, Scene } from 'react-native-router-flux';
+// and connect router with redux
+const RouterWithRedux = connect()(Router);
+
+// Import views (you could think them as pages)
 import Home from './Home';
+import About from './About';
 
 
 import {
@@ -33,14 +40,16 @@ const store = configurateStore({});
 // Define application container. Holds everything from our app.
 class AppContainer extends Component {
 
+  // Every react component must have render function!
   render() {
 
     return  (
       // Connect redux to our app with Provider.
       <Provider store={store}>
-        <Router>
-          <Route name="home" component={Home} />
-        </Router>
+        <RouterWithRedux>
+          <Scene key="home" name="home" component={Home} title="Home" />
+          <Scene key="about" name="about" component={About} title="About" />
+        </RouterWithRedux>
       </Provider>
     );
   }
